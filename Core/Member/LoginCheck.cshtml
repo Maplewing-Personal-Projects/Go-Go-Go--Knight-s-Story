@@ -1,17 +1,27 @@
 ﻿@{
-    
+    var message = "";
     if(IsPost){
-       
+        
+        var enterEmail = Request["Email"];
+        var enterPassword = Request["Password"];
 
         var db = Database.Open("Go-Go-Go--Knight-s-Story");
 
-        db.Execute("SELECT Email, Password"+
-                   "FROM db");
+        var result = db.Query("SELECT * "+
+                    "FROM Member "+
+                    "WHERE Email=@0 AND Password=@1", enterEmail, enterPassword);
                         
+        if(result.Count() <= 0){
+            message = "Login Fail.";
+        }
+        else{
+            Session["Id"] = result.ToArray()[0].Member_Id;
+            message = "Login Success.";
+        }
 
     }
 
 }
-
+@message<br/>
 @Request["Email"]<br/>
 @Request["Password"]<br/>
