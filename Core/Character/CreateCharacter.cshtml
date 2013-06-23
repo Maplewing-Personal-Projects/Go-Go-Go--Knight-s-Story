@@ -1,4 +1,28 @@
 ﻿@{
     Layout = "~/Shared/_layout.cshtml";
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    var result = db.Query("SELECT * FROM Class");
+                        
 }
 
+@{
+  if(Session["Id"] == null){
+    Response.Redirect("../Member/Login.cshtml");
+  }
+  else{
+    <form action="CharacterInsert.cshtml" method="post">
+        <p>角色姓名:
+            <input type="text" name="Character_Name" size="15" maxlength="100">
+        </p>
+
+        <p>請選擇職業</p>
+        <select name="Class_Id">
+            @foreach( var classtype in result ){
+                <option value="@classtype.Class_Id">@classtype.Class_Name</option>
+            }
+        </select>
+        
+        <input type="submit" name="subscribe" value="送出">
+    </form>
+  }
+}
