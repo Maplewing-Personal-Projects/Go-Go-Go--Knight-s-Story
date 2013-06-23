@@ -17,9 +17,11 @@
                     <li><a href = "@Href("~/index.cshtml")">首頁</a></li>
                     @{
                         if(Session["Id"] == null){
+                            <li><a href = "@Href("~/Core/Member/Register.cshtml")">註冊</a></li>
+                            <li><a href = "@Href("~/Core/Member/Login.cshtml")">登入</a></li>
                         }
                         else{
-                            
+                            <li><a href = "@Href("~/Core/Member/Logout.cshtml")">登出</a></li>
                         }
                     }
                 </ul>
@@ -29,6 +31,7 @@
             </section>
 
             <footer>
+                師大資工系103級 曹又霖、鄒毓偉、沈志中 製作
             </footer>
         </div>
     </body>

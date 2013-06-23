@@ -51,8 +51,22 @@ body {
     margin: 0 auto;
     padding: 15px;
     width: 960px;
-    height: 200px;
+    min-height: 200px;
     background: url("../Images/gameBg.png");
-    
 }
 
+form table{
+    margin: 0 auto;
+}
+
+form table th{
+    text-align: right;
+}
+
+footer{
+    font-size: small;
+    margin: 0 auto;
+    width: 990px;
+    color: white;
+    background: #808080;
+}
