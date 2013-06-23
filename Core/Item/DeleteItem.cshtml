@@ -1,0 +1,13 @@
+﻿@{
+     
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+    db.Execute("DELETE FROM Item "+
+               "WHERE Item_Id=@0", Request["id"]);
+
+    Response.Redirect("ViewItem.cshtml");
+
+}
+
+

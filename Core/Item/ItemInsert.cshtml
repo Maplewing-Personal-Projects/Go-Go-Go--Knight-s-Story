@@ -1,0 +1,29 @@
+﻿@{
+    
+    if(IsPost){
+        var Item_name = Request["Item_name"];
+        var Price = Request["Price"];
+        var Item_type = Request["Item_type"];
+
+        Convert.ToInt32(Price);
+
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+        if(Request["id"] == ""){
+            db.Execute("INSERT INTO Item(Item_name, Price, Item_type)"+
+                            "VALUES (@0, @1, @2)", Item_name, Price, Item_type);
+        }
+        else{
+            db.Execute("UPDATE Item "+
+                       "SET Item_name=@0, Price=@1, Item_type=@2 "+
+                       "WHERE Item_Id=@3", Item_name, Price, Item_type, Request["id"]);
+        }
+
+        Response.Redirect("ViewItem.cshtml");
+    }
+    
+}
+
+@Request["Item_name"]
+@Request["Price"]
+@Request["Item_type"]
