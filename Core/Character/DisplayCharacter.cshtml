@@ -13,6 +13,7 @@
         if(Request["member_id"] != null){
             resultQuery = db.Query(@"SELECT * FROM Character c JOIN Ability a ON c.[Ability_Id] = a.[Ability_Id] WHERE Member_Id=@0", Request["member_id"]);
         }
+        <h1>持有角色狀態</h1>
         <table>
             <tr>
                 <th>編號</th>
