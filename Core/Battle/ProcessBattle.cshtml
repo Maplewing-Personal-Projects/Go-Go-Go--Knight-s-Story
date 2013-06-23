@@ -45,6 +45,6 @@
             db.Execute(@"UPDATE Character SET Current_HP=@0 WHERE Character_Id=@1", manHealth, Character_Type);
         }
         db.Execute(@"INSERT INTO Battle_To_Monster(Character_Id, Monster_Id, Monster_Battle_Id) VALUES(@0, @1, @2)", Character_Type, monsterID, db.GetLastInsertId());
-        Response.Redirect("DisplayBattle.cshtml?character_id="+Character_Type);
+        Response.Redirect("DisplayBattle.cshtml?character_id="+Character_Type+"&monster_id="+monsterID);
     }
 }
