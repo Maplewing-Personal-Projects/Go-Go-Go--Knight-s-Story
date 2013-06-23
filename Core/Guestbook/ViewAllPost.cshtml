@@ -4,10 +4,10 @@
         Response.Redirect("~/Core/Member/Login.cshtml");
     }
     var db = Database.Open("Go-Go-Go--Knight-s-Story");
-    var result = db.Query("SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE p.Post_Id not in (Select Reply_Post_Id From Reply)");
+    var result = db.Query("SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE p.Post_Id not in (Select Reply_Post_Id From Reply) ORDER BY Created_Time DESC");
     if(Request["search_name"] != null){
         result = db.Query(@"SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE p.Post_Id not in (Select Reply_Post_Id From Reply) AND 
-            p.Content like @0", "%"+Request["search_name"]+"%");
+            p.Content like @0 ORDER BY Created_Time DESC", "%"+Request["search_name"]+"%");
     }
 }
 

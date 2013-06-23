@@ -8,12 +8,10 @@
     }
     else{
         var db = Database.Open("Go-Go-Go--Knight-s-Story");    
-        var resultQuery = db.Query(@"SELECT * FROM Character c JOIN Ability a ON c.[Ability_Id] = a.[Ability_Id]");
-
-        if(Request["member_id"] != null){
-            resultQuery = db.Query(@"SELECT * FROM Character c JOIN Ability a ON c.[Ability_Id] = a.[Ability_Id] WHERE Member_Id=@0", Request["member_id"]);
-        }
-        <h1>持有角色狀態</h1>
+        var resultQuery = db.Query(@"SELECT * FROM Character c JOIN Ability a ON c.[Ability_Id] = a.[Ability_Id] WHERE Member_Id=@0 ORDER BY Character_Id", Session["id"]);
+        var memberName = db.Query(@"SELECT NickName FROM Member WHERE Member_Id = @0", Session["Id"]);
+        <h1>@memberName.ToArray()[0].NickName 持有角色狀態</h1>
+        <p><a href="CreateCharacter.cshtml">創建角色</a></p>
         <table>
             <tr>
                 <th>編號</th>
