@@ -70,3 +70,16 @@ footer{
     color: white;
     background: #808080;
 }
+
+a{
+    color: #0094ff;
+    text-decoration: none;
+}
+
+a:visited{
+    color: #0094ff;
+}
+
+a:hover{
+    color: #4800ff;
+}
