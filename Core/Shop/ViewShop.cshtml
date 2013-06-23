@@ -11,11 +11,14 @@
                           "FROM Shop ");
     
 
+    <h1>商店街</h1>
+    if( (int)Session["id"] == 1 ){
+        <p><a href="ShopForm.cshtml">新增商店</a></p>  
+    }
     <table>
         <tr>
             <th>商店名稱</th>
         </tr>
-
         @foreach (var i in result){
             <tr>
                 <td>@i.Shop_Name</td>
