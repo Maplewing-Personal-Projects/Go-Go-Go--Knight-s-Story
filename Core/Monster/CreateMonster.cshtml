@@ -1,0 +1,29 @@
+﻿@{
+     Layout = "~/Shared/_layout.cshtml";
+     var db = Database.Open("Go-Go-Go--Knight-s-Story");
+     var resultQuery = db.Query(@"SELECT * FROM Map");
+}
+
+@{
+      if(Session["Id"] == null){
+        Response.Redirect("../Member/Login.cshtml");
+      }
+      else{
+        <form action="InsertMonster.cshtml" method="post">
+            <p>怪物名稱:
+                <input type="text" name="Monster_Name" size="15" maxlength="100">
+            </p>
+
+            <p>怪物等級:
+                <input type="text" name="Monster_Level" size="15" maxlength="100">
+            </p>
+
+            <p>請選擇出沒的地圖</p>
+            @foreach (var result in resultQuery){
+                <input type="checkbox" name="Map" value="@result.Map_Name">
+            }
+        
+            <input type="submit" name="subscribe" value="送出">
+        </form>
+      }
+}

@@ -1,0 +1,41 @@
+﻿@{
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");    
+    var resultQuery = db.Query(@"SELECT * FROM Character c JOIN Ability a ON c.[Ability_Id] = a.[Ability_Id]");
+
+    if(Request["member_id"] != null){
+        resultQuery = db.Query(@"SELECT * FROM Character c JOIN Ability a ON c.[Ability_Id] = a.[Ability_Id] WHERE Member_Id=@0", Request["member_id"]);
+    }
+    <table>
+        <tr>
+            <th>編號</th>
+            <th>名稱</th>
+            <th>等級</th>
+            <th>經驗</th>
+            <th>血量</th>
+            <th>魔力</th>
+            <th>最大血量</th>
+            <th>最大魔力</th>
+            <th>攻擊</th>
+            <th>防禦</th>
+            <th>敏捷</th>
+            <th>命中</th>
+        </tr>
+
+        @foreach(var result in resultQuery){
+            <tr>
+                <td>@result.Character_Id</td>
+                <td>@result.Character_Name</td>
+                <td>@result.Character_Level</td>
+                <td>@result.Exp</td>
+                <td>@result.Current_HP</td>
+                <td>@result.Current_MP</td>
+                <td>@result.Health_Point</td>
+                <td>@result.Magic_Point</td>
+                <td>@result.Attack</td>
+                <td>@result.Defense</td>
+                <td>@result.Agility</td>
+                <td>@result.Dexterity</td>
+            </tr>
+        }
+    </table>  
+}

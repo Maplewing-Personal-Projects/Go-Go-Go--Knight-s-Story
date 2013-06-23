@@ -1,8 +1,7 @@
 ﻿@{
     Layout = "~/Shared/_layout.cshtml";
     var db = Database.Open("Go-Go-Go--Knight-s-Story");
-    var result = db.Query("SELECT * FROM Class");
-                        
+    var resultQuery = db.Query("SELECT * FROM Class");  
 }
 
 @{
@@ -17,7 +16,7 @@
 
         <p>請選擇職業</p>
         <select name="Class_Id">
-            @foreach( var classtype in result ){
+            @foreach( var classtype in resultQuery ){
                 <option value="@classtype.Class_Id">@classtype.Class_Name</option>
             }
         </select>
