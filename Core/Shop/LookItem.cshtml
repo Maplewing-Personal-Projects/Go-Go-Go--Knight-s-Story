@@ -29,16 +29,38 @@
         <tr>
             <th>商品名稱</th>
             <th>商品價錢</th>
+            
+            <th>生命點數</th>
+            <th>魔力點數</th>
+            <th>攻擊力</th>
+            <th>防禦力</th>
+            <th>敏捷力</th>
+            <th>命中率</th>
+            <th>操作</th>
+
         </tr>
 
         @foreach (var i in result){
+
             var search=db.Query("SELECT * "+
                                 "FROM Item "+
                                 "WHERE Item_Id= @0 ", @i.Item_Id );
 
+            var ability_id=db.Query("SELECT * "+
+                                    "FROM Ability " +   
+                                    "WHERE Ability_Id=@0", @search[0].Ability_Id);
+
             <tr>               
                 <td>@search[0].Item_Name</td>
                 <td>@search[0].Price</td>
+
+                <td>@ability_id[0].Health_Point</td>
+                <td>@ability_id[0].Magic_Point</td>
+                <td>@ability_id[0].Attack</td>
+                <td>@ability_id[0].Defense</td>
+                <td>@ability_id[0].Agility</td>
+                <td>@ability_id[0].Dexterity</td>
+
 
                 <td>
                     

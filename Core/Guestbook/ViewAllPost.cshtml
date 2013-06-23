@@ -5,11 +5,18 @@
     }
     var db = Database.Open("Go-Go-Go--Knight-s-Story");
     var result = db.Query("SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE p.Post_Id not in (Select Reply_Post_Id From Reply)");
-
+    if(Request["search_name"] != null){
+        result = db.Query(@"SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE p.Post_Id not in (Select Reply_Post_Id From Reply) AND 
+            p.Content like @0", "%"+Request["search_name"]+"%");
+    }
 }
 
 <h1>文章列表</h1>
 <p><a href="PostForm.cshtml">發表文章</a></p>
+<form action="ViewAllPost.cshtml" method="get">
+    <input type="text" name="search_name"/>
+    <input type="submit" value="搜尋"/>
+</form>
 <table>
     <tr>
         <th style="width: 500px;">文章標題</th>

@@ -6,20 +6,40 @@
     if(IsPost){
         var Item_name = Request["Item_name"];
         var Price = Request["Price"];
-        var Item_type = Request["Item_type"];
+        
+        var Health_Point = Request["Health_Point"];
+        var Magic_Point = Request["Magic_Point"];
+        var Attack = Request["Attack"];
+        var Defense = Request["Defense"];
+        var Agility = Request["Agility"];
+        var Dexterity = Request["Dexterity"];
+
 
         Convert.ToInt32(Price);
 
         var db = Database.Open("Go-Go-Go--Knight-s-Story");
 
         if(Request["id"] == ""){
-            db.Execute("INSERT INTO Item(Item_name, Price, Item_type)"+
-                            "VALUES (@0, @1, @2)", Item_name, Price, Item_type);
+            db.Execute("INSERT INTO Ability(Health_Point, Magic_Point, Attack, Defense, Agility, Dexterity) "+
+                       "VALUES (@0, @1, @2, @3, @4, @5) ", Health_Point, Magic_Point, Attack, Defense, Agility, Dexterity);
+
+            var ability_id=db.GetLastInsertId();
+
+            db.Execute("INSERT INTO Item(Item_name, Price, Ability_Id)"+
+                       "VALUES (@0, @1, @2)", Item_name, Price, ability_id);
         }
         else{
+            var ability_id = db.Query("SELECT Ability_Id FROM Item WHERE Item_Id = @0", Request["Id"]);
+
+            db.Execute("UPDATE Ability "+
+                       "SET Health_Point=@0, Magic_Point=@1, Attack=@2, Defense=@3, Agility=@4, Dexterity=@5 "+                   
+                       "WHERE Ability_Id = @6", Health_Point, Magic_Point, Attack, Defense, Agility, Dexterity,  ability_id.ToArray()[0].Ability_Id);
+
+
+
             db.Execute("UPDATE Item "+
-                       "SET Item_name=@0, Price=@1, Item_type=@2 "+
-                       "WHERE Item_Id=@3", Item_name, Price, Item_type, Request["id"]);
+                       "SET Item_name=@0, Price=@1 "+
+                       "WHERE Item_Id=@2", Item_name, Price, Request["id"]);
         }
 
         Response.Redirect("ViewItem.cshtml");
@@ -29,4 +49,3 @@
 
 @Request["Item_name"]
 @Request["Price"]
-@Request["Item_type"]
