@@ -1,0 +1,17 @@
+﻿@{
+    
+    if(IsPost){
+       
+
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+        db.Execute("SELECT Email, Password"+
+                   "FROM db");
+                        
+
+    }
+
+}
+
+@Request["Email"]<br/>
+@Request["Password"]<br/>
