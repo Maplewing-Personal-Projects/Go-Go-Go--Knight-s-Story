@@ -1,0 +1,14 @@
+﻿@{
+    if(IsPost){
+        var Email = Request["Email"];
+        var Password = Request["Password"];
+        var Nickname = Request["Nickname"];
+
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+        db.Execute("INSERT INTO Member(Email, Password, Nickname)"+
+                        "VALUES (@0, @1, @2)", Email, Password, Nickname);
+    }
+
+    Response.Redirect("Register.cshtml");
+}
