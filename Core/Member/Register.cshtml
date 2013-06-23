@@ -3,17 +3,22 @@
 }
 
 <form action="MemberInsert.cshtml" method = "post">
-    會員註冊
-    <p>電子信箱:
-        <input type="text" name="Email" size="15" maxlength="100">
-    </p>
-    <p>密碼:
-        <input type="password" name="Password" size="15" maxlength="100">
-    </p>
-    <p>暱稱
-        <input type="text" name="Nickname" size="15" maxlength="100">
-    </p>
-    <p>
-        <input type="submit" name="subscribe" value="送出">
-    </p>
+    <h1>會員註冊</h1>
+    <table>
+    <tr>
+        <th>電子信箱</th>
+        <td><input type="text" name="Email" size="15" maxlength="100"></td>
+    </tr>
+    <tr>
+        <th>密碼</th>
+        <td><input type="password" name="Password" size="15" maxlength="100"></td>
+    </tr>
+    <tr>
+        <th>暱稱</th>
+        <td><input type="text" name="Nickname" size="15" maxlength="100"></td>
+    </tr>
+    <tr>
+        <td colspan="2"><input type="submit" name="subscribe" value="送出"></td>
+    </tr>
+    </table>
 </form>

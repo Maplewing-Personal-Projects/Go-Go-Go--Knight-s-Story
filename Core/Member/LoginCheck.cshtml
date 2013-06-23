@@ -1,4 +1,6 @@
 ﻿@{
+    Layout = "~/Shared/_layout.cshtml"; 
+
     var message = "";
     if(IsPost){
         
@@ -12,16 +14,16 @@
                     "WHERE Email=@0 AND Password=@1", enterEmail, enterPassword);
                         
         if(result.Count() <= 0){
-            message = "Login Fail.";
+            message = "登入失敗！";
         }
         else{
             Session["Id"] = result.ToArray()[0].Member_Id;
-            message = "Login Success.";
+            message = "登入成功！";
         }
 
     }
 
 }
-@message<br/>
-@Request["Email"]<br/>
-@Request["Password"]<br/>
+
+<h1>@message</h1>
+

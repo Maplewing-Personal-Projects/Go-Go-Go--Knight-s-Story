@@ -1,0 +1,85 @@
+body {
+    background: #00022b url("../Images/bg.png") repeat-x;
+    text-align: center;
+    font-family: "微軟正黑體";
+}
+
+.gameMain header{
+    margin: 0 auto;
+    width: 960px;   
+}
+
+.gameMain ul{
+    list-style-type: none;
+    background: black;
+    width: 990px;
+    margin: 0 -15px;
+    padding:  0;
+    float: left;
+}
+.gameMain ul li{
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    height: 20px;
+    float: left;
+}
+
+.gameMain ul li a{
+    display: block;
+    background: black;
+    width: 100px;
+    height: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.gameMain ul li a:visited{
+    background: black;
+    color:  white;
+    width: 100px;
+}
+
+.gameMain ul li a:hover{
+    background: white;
+    color:  black;
+    width: 100px;
+}
+
+.gameMain section{
+    clear: both;
+    margin: 0 auto;
+    padding: 15px;
+    width: 960px;
+    min-height: 200px;
+    background: url("../Images/gameBg.png");
+}
+
+form table{
+    margin: 0 auto;
+}
+
+form table th{
+    text-align: right;
+}
+
+footer{
+    font-size: small;
+    margin: 0 auto;
+    width: 990px;
+    color: white;
+    background: #808080;
+}
+
+a{
+    color: #0094ff;
+    text-decoration: none;
+}
+
+a:visited{
+    color: #0094ff;
+}
+
+a:hover{
+    color: #4800ff;
+}
