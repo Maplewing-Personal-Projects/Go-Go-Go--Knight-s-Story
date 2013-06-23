@@ -1,0 +1,24 @@
+﻿@{    
+    Layout = "~/Shared/_layout.cshtml";   
+}
+
+@{
+  if(Session["Id"] == null){
+    <form action="LoginCheck.cshtml" method = "post">
+        會員登入
+        <p>電子信箱:
+            <input type="text" name="Email" size="15" maxlength="100">
+        </p>
+        <p>密碼:
+            <input type="password" name="Password" size="15" maxlength="100">
+        </p>
+
+        <p>
+            <input type="submit" name="subscribe" value="送出">
+        </p>
+    </form>
+  }
+  else{
+    <p>您已經登入完畢！</p>
+  }
+}
