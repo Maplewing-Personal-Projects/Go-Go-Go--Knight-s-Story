@@ -1,0 +1,16 @@
+﻿@{
+    if(IsPost){
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+        
+        if(Request["EditNum"] != ""){
+            db.Execute("UPDATE Post SET Title=@0, Content=@1 WHERE Post_Id=@2", Request["Title"], Request["Content"], Request["EditNum"]);
+        }
+        else{
+            db.Execute("INSERT INTO Post(Member_Id, Title, Content, Created_Time) VALUES(@0, @1, @2, @3)", Session["id"], Request["Title"], Request["Content"], System.DateTime.Now);
+            if( Request["Reply"] != "" ){
+                db.Execute("INSERT INTO Reply VALUES(@0, @1)", Request["Reply"], db.GetLastInsertId());
+            }
+        }
+    }
+    Response.Redirect("ViewAllPost.cshtml");
+}

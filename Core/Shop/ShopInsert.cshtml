@@ -1,0 +1,33 @@
+﻿@{
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }    
+
+    var Item_id_array= Request["Item"].Split(',');
+
+    if(IsPost){
+        var Shop_name = Request["Shop_name"];
+
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+        
+
+
+        db.Execute("INSERT INTO Shop(Shop_name) "+
+                   "VALUES (@0) ", Shop_name);
+
+        var shop_id=db.GetLastInsertId();
+
+        foreach(var i in Item_id_array){
+            db.Execute("INSERT INTO Sell_Item(Item_Id, Shop_Id) "+
+                       "VALUES (@0, @1) ", i, shop_id);
+        }
+
+        Response.Redirect("ViewShop.cshtml");
+
+    }
+}
+
+
+
+
+@Request["Shop_name"]

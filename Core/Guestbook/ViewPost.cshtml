@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }
+    
+    if(Request["p"] == null){
+        Response.Redirect("ViewAllPost.cshtml");
+    }    
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    var result = db.Query("SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE Post_Id = @0", Request["p"]);
+    var replyResult = db.Query("SELECT * FROM (Post p JOIN Reply r ON p.[Post_Id] = r.[Reply_Post_Id]) JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE r.[Main_Post_Id] = @0", Request["p"]);
+    HtmlString hstr;
+}
+<h1>@result.ToArray()[0].Title</h1>
+<p><a href="PostForm?Reply=@result.ToArray()[0].Post_Id">發表回覆</a></p>
+<table>
+    <tr>
+        <th style="width: 100px">發表人</th>
+        <td style="width: 500px">@result.ToArray()[0].Nickname</td>
+    </tr>
+    <tr>
+        <th colspan="2">發表文章</td>
+    </tr>
+    <tr>
+        @{ hstr = new HtmlString(result.ToArray()[0].Content.Replace("\n","<br/>")); }
+        <td colspan="2" style="text-align: left;">@hstr</td>
+    </tr>
+    @if( (int)Session["id"] == result.ToArray()[0].Member_Id ){
+        <tr>
+            <td colspan="2">
+                <a href="PostForm.cshtml?EditNum=@result.ToArray()[0].Post_Id">編輯文章</a> |
+                <a href="DeletePost.cshtml?p=@result.ToArray()[0].Post_Id">刪除文章</a>
+            </td>
+        </tr>
+    }
+</table>
+<h2>回覆</h2>
+
+@foreach(var reply in replyResult){
+    <table>
+        <tr>
+            <th style="width: 100px">回覆主題</th>
+            <td style="width: 500px">@reply.Title</td>
+        </tr>
+        <tr>
+            <th>發表人</th>
+            <td>@reply.Nickname</td>
+        </tr>
+        <tr>
+            <th colspan="2">回覆內容</th>
+        </tr>
+        <tr>
+            @{ hstr = new HtmlString(reply.Content.Replace("\n","<br/>")); }
+            <td colspan="2" style="text-align: left;">@hstr</td>
+        </tr>
+        @if( (int)Session["id"] == reply.Member_Id ){
+        <tr>
+            <td colspan="2">
+                <a href="PostForm.cshtml?EditNum=@reply.Post_Id">編輯文章</a> |
+                <a href="DeletePost.cshtml?p=@reply.Post_Id">刪除文章</a>
+            </td>
+        </tr>
+    }
+    </table>
+}

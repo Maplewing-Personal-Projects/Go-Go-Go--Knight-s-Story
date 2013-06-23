@@ -1,5 +1,8 @@
 ﻿@{
     Layout = "~/Shared/_layout.cshtml";
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }    
 }    
 
 
