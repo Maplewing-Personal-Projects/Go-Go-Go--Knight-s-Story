@@ -1,0 +1,36 @@
+﻿@{
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    
+    var result = db.Query("SELECT * "+
+                          "FROM Item ");
+                          
+    <table>
+        <tr>
+            <th>商品名稱</th>
+            <th>商品價錢</th>
+            <th>商品類別</th>
+            <th>操作</th>
+        </tr>
+    @foreach (var i in result){
+        <tr>
+            <td>@i.Item_Name</td>
+            <td>@i.Price</td>
+            <td>@i.Item_Type</td>
+            <td>
+                <form action ="ItemForm.cshtml" method="POST">
+                    <input type="hidden" name="id" value="@i.Item_Id"/>
+                    <input type="submit" name="edit" value="編輯">
+                </form>
+            </td>
+            <td>
+                <form action ="DeleteItem.cshtml" method="POST">
+                    <input type="hidden" name="id" value="@i.Item_Id"/>
+                    <input type="submit" name="delete" value="刪除">
+                </form>
+            </td>
+        </tr>    
+    }
+    </table>
+
+}
+

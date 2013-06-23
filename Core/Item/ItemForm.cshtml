@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+}    
+
+
+<form action="ItemInsert.cshtml" method = "post">
+
+    @{    
+      var id = "";
+      var Item_Name = "";
+      var Price = "";
+
+    }
+    @if(Request["id"] != null){
+        <h1>物品的編輯</h1>
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+        var result = db.Query("SELECT * "+
+                          "FROM Item WHERE Item_Id = @0", Request["id"]);
+        Item_Name = result.ToArray()[0].Item_Name;
+        Price = result.ToArray()[0].Price.ToString();
+        id = Request["id"];
+    }
+    else{
+        <h1>物品的新增</h1>
+    }
+    <table>
+        <tr>
+            <th>物品名稱</th>
+            <td><input type="text" name="Item_name" size="15" maxlength="100" value="@Item_Name"></td>
+        </tr>
+        <tr>
+            <th>價錢</th>
+            <td><input type="text" name="Price" size="15" maxlength="100" value="@Price"></td>
+        </tr>
+        <tr>
+            <th>物品類型</th>
+            <td>
+                <select name="Item_type">
+                    <option value="LeftHand">左手武器</option>
+                    <option value="RightHand">右手武器</option>
+                    <option value="TwoHand">雙手武器</option>
+                    <option value="Hand">手部裝備</option>
+                    <option value="Head">頭部裝備</option>
+                    <option value="UpperBody">上身裝備</option>
+                    <option value="LowerBody">下身裝備</option>
+                    <option value="Foot">腳部裝備</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <input type="hidden" name="id" value="@id"/>
+            @if(Request["id"] != null){
+                <td colspan="2"><input type="submit" name="subscribe" value="更新"></td>
+            }
+            else{
+                <td colspan="2"><input type="submit" name="subscribe" value="新增"></td>
+            }
+            
+        </tr>
+
+    </table>
+</form>
+
