@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }    
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");    
+
+    var result = db.Query("SELECT * "+
+                          "FROM Shop ");
+    
+
+    <table>
+        <tr>
+            <th>商店名稱</th>
+        </tr>
+
+        @foreach (var i in result){
+            <tr>
+                <td>@i.Shop_Name</td>
+                <td>
+                    
+                    <form action ="LookItem.cshtml" method="POST">
+                        <input type="hidden" name="id" value="@i.Shop_Id"/>
+                        <input type="submit" name="edit" value="看商品">
+                    </form>
+                    
+                </td>
+               
+
+            </tr>
+        }
+
+    </table>
+}
+
+

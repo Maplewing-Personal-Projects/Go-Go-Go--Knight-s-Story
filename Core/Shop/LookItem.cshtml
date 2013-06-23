@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }    
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");   
+
+    var result = db.Query("SELECT * "+
+                          "FROM Sell_Item "+
+                          "WHERE Shop_Id=@0 ", Request["id"]);
+    
+
+    var shop_search = db.Query("SELECT * "+
+                          "FROM Shop "+
+                          "WHERE Shop_Id=@0 ", Request["id"]);
+
+    var member_search=db.Query("SELECT * "+
+                               "FROM Member "+
+                               "WHERE Member_Id= @0 ", Session["Id"] );
+
+    <h1> @shop_search.ToArray()[0].Shop_Name 的商品列表</h1>
+    
+    <p>玩家剩餘金額:@member_search.ToArray()[0].Money</p>    
+
+    <table>
+        
+        <tr>
+            <th>商品名稱</th>
+            <th>商品價錢</th>
+        </tr>
+
+        @foreach (var i in result){
+            var search=db.Query("SELECT * "+
+                                "FROM Item "+
+                                "WHERE Item_Id= @0 ", @i.Item_Id );
+
+            <tr>               
+                <td>@search[0].Item_Name</td>
+                <td>@search[0].Price</td>
+
+                <td>
+                    
+                    <form action ="BuyItem.cshtml" method="POST">
+                        <input type="hidden" name="id" value="@i.Item_Id"/>
+                        <input type="submit" name="edit" value="買商品">
+                    </form>
+                    
+                </td>
+            </tr>
+        }
+    
+    </table>
+}
+

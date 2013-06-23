@@ -1,0 +1,59 @@
+﻿@{
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    } 
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+    var member_search=db.Query("SELECT * "+
+                               "FROM Member "+
+                               "WHERE Member_Id= @0 ", Session["Id"] );
+
+    var Item_search=db.Query("SELECT * "+
+                             "FROM Item "+
+                             "WHERE Item_Id= @0 ", Request["id"] );
+    
+    var message = "";
+      
+    if(member_search.ToArray()[0].Money >= Item_search.ToArray()[0].Price){
+        var check=db.Query("SELECT * "+
+                           "FROM Have_item "+
+                           "WHERE Member_Id= @0 AND Item_Id= @1 ", Session["Id"] , Request["id"]);
+
+        if(check.Count()==0){            
+            db.Execute("INSERT INTO Have_Item(Member_Id, Item_Id) "+
+                       "VALUES (@0, @1)", Session["Id"], Request["id"]);
+
+            db.Execute("UPDATE Have_Item "+
+                       "SET Number=Number+1 "+
+                       "WHERE Member_Id= @0 AND Item_Id= @1 ", Session["Id"] , Request["id"]);
+            
+            db.Execute("UPDATE Member "+
+                       "SET Money=Money-@0 "+
+                       "WHERE Member_Id= @1 ", Item_search.ToArray()[0].Price, Session["Id"]);
+
+        }
+        else{
+            db.Execute("UPDATE Have_Item "+
+                       "SET Number=Number+1 "+
+                       "WHERE Member_Id= @0 AND Item_Id= @1 ", Session["Id"] , Request["id"]);
+            
+            db.Execute("UPDATE Member "+
+                       "SET Money=Money-@0 "+
+                       "WHERE Member_Id= @1 ", Item_search.ToArray()[0].Price, Session["Id"]);
+
+        }
+
+
+        message="購買成功";
+    }
+    else{
+        
+        message="購買失敗";
+
+    }
+
+}
+
+<h1>@message</h1>
+

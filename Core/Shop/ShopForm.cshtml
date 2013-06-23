@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }    
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    var resultQuery=db.Query(@"SELECT * FROM Item");
+}
+
+
+<form action="ShopInsert.cshtml" method = "post">
+    
+    <h1>新增商店</h1>
+    
+    <table>
+        <tr>
+            <th>商店名稱</th>
+            <td><input type="text" name="Shop_name" size="15" maxlength="100"/></td>
+        </tr>
+        <tr>
+            <th colspan="2" style="text-align: center;">要賣的商品</th>
+        </tr>
+            <tr> <td colspan="2"> 
+            @foreach(var i in resultQuery){
+                <input type="checkbox" name="Item" value="@i.Item_Id"/>@i.Item_name  <br/>  
+            }
+            </td> </tr>
+        <tr>
+            <td colspan="2"><input type="submit" name="subscribe" value="新增"/></td>
+        </tr>
+    </table>
+    
+</form>
+
+
+ 

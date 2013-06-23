@@ -1,5 +1,8 @@
 ﻿@{
-    
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }    
+
     if(IsPost){
         var Item_name = Request["Item_name"];
         var Price = Request["Price"];
