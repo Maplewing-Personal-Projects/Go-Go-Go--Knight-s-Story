@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+    
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+    var result=db.Query(@"SELECT * FROM (Member M JOIN  Have_Item H ON  M.[Member_Id] = H.[Member_Id] ) JOIN Item I ON H.[Item_Id] = I.[Item_Id]");
+
+
+
+
+}
+

@@ -1,0 +1,71 @@
+﻿@{
+
+    Layout = "~/Shared/_layout.cshtml";    
+
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }
+    
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+    var member_search=db.Query("SELECT * "+
+                               "FROM Member "+
+                               "WHERE Member_Id= @0 ", Session["Id"] );
+
+    var Item_Id=db.Query("SELECT * "+
+                           "FROM Have_Item "+
+                           "WHERE Member_Id=@0", Session["Id"] );
+
+    <h1> @member_search.ToArray()[0].Nickname 的道具列表</h1>
+    
+    <table>
+        <tr>
+            <th>商品名稱</th>
+            <th>商品數量</th>
+            
+            <th>生命點數</th>
+            <th>魔力點數</th>
+            <th>攻擊力</th>
+            <th>防禦力</th>
+            <th>敏捷力</th>
+            <th>命中率</th>
+            <th></th>        
+
+        </tr>
+
+        @foreach (var i in Item_Id){
+            var item=db.Query("SELECT * "+
+                              "FROM Item " +   
+                              "WHERE Item_Id=@0", @i.Item_Id);
+
+            var ability_id=db.Query("SELECT * "+
+                                "FROM Ability " +   
+                                "WHERE Ability_Id=@0", item[0].Ability_Id);
+
+            <tr>
+                <td>@item[0].Item_Name</td>
+                <td>@i.Number</td>
+
+                <td>@ability_id[0].Health_Point</td>
+                <td>@ability_id[0].Magic_Point</td>
+                <td>@ability_id[0].Attack</td>
+                <td>@ability_id[0].Defense</td>
+                <td>@ability_id[0].Agility</td>
+                <td>@ability_id[0].Dexterity</td>
+                
+                <td>
+                    <form action ="ConsumeItem.cshtml" method="POST">
+                        <input type="hidden" name="id" value="@i.Item_Id"/>
+                        <input type="submit" name="edit" value="使用物品">
+                    </form>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+
+
+
+

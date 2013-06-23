@@ -1,0 +1,29 @@
+﻿@{
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }    
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    db.Execute("UPDATE Have_Item SET Number = Number-1 WHERE Item_Id = @0 AND Member_Id = @1", Request["id"], Session["id"]);
+    
+    var item = db.Query("SELECT * FROM Item WHERE Item_Id = @0", Request["id"]);
+    var characters = db.Query("SELECT * FROM Character WHERE Member_Id = @0", Session["id"]);
+    var item_ability = db.Query("SELECT * FROM Ability WHERE Ability_Id = @0", item.ToArray()[0].Ability_Id );
+    
+    foreach( var character in characters ){
+        db.Execute("UPDATE Ability SET Attack = Attack + @0, Defense = Defense + @1, Agility = Agility + @2, Dexterity = Dexterity + @3 WHERE Ability_Id = @4",
+            item_ability[0].Attack, item_ability[0].Defense, item_ability[0].Agility, item_ability[0].Dexterity, character.Ability_Id);
+
+        db.Execute("UPDATE Character SET Current_HP = Current_HP + @0, Current_MP = Current_MP + @1 WHERE Character_Id = @2", item_ability[0].Health_Point,
+            item_ability[0].Magic_Point, character.Character_Id);
+    }
+    var number = db.Query("SELECT Number From Have_Item WHERE Item_id = @0 AND Member_Id = @1", Request["id"], Session["id"]);
+
+    if( number.ToArray()[0].Number <= 0 ){
+        db.Execute("DELETE FROM Have_Item WHERE Item_id = @0 AND Member_Id = @1", Request["id"], Session["id"]);
+    }
+
+    Response.Redirect("UseItem.cshtml");
+}
+
+
