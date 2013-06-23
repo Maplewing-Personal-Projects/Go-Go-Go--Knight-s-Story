@@ -36,15 +36,22 @@
 
         if(manHealth <= 0){
             db.Execute(@"INSERT INTO Battle(Result) VALUES('LOSE')");
+            var battleQuery = db.Query(@"SELECT * FROM Battle WHERE Battle_Id=@0", db.GetLastInsertId());
             db.Execute(@"INSERT INTO Monster_Battle(Result) VALUES('WIN')");
             db.Execute(@"UPDATE Character SET Current_HP=0 WHERE Character_Id=@0", Character_Type);
+                        db.Execute(@"INSERT INTO Battle_To_Monster(Character_Id, Monster_Id, Monster_Battle_Id) VALUES(@0, @1, @2)", Character_Type, monsterID, db.GetLastInsertId());
+            Response.Redirect("DisplayBattle.cshtml?character_id="+Character_Type+"&monster_id="+monsterID+"&battle_id="+battleQuery[0].Battle_Id);
         }
         else if(monsterHealth <= 0){
+            var member = db.Query(@"SELECT * FROM Member WHERE Member_Id=@0", Session["Id"]);
+            var money = chosenMonster[0].Money + member.ToArray()[0].Money;
             db.Execute(@"INSERT INTO Battle(Result) VALUES('WIN')");
+            var battleQuery = db.Query(@"SELECT * FROM Battle WHERE Battle_Id=@0", db.GetLastInsertId());
             db.Execute(@"INSERT INTO Monster_Battle(Result) VALUES('LOSE')");
+            db.Execute(@"UPDATE Member SET Money=@0 WHERE Member_Id=@1", money, Session["Id"]);
             db.Execute(@"UPDATE Character SET Current_HP=@0 WHERE Character_Id=@1", manHealth, Character_Type);
+            db.Execute(@"INSERT INTO Battle_To_Monster(Character_Id, Monster_Id, Monster_Battle_Id) VALUES(@0, @1, @2)", Character_Type, monsterID, db.GetLastInsertId());
+            Response.Redirect("DisplayBattle.cshtml?character_id="+Character_Type+"&monster_id="+monsterID+"&battle_id="+battleQuery[0].Battle_Id);
         }
-        db.Execute(@"INSERT INTO Battle_To_Monster(Character_Id, Monster_Id, Monster_Battle_Id) VALUES(@0, @1, @2)", Character_Type, monsterID, db.GetLastInsertId());
-        Response.Redirect("DisplayBattle.cshtml?character_id="+Character_Type+"&monster_id="+monsterID);
     }
 }

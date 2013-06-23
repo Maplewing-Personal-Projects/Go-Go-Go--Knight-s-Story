@@ -8,7 +8,7 @@
     }
     else{
         var db = Database.Open("Go-Go-Go--Knight-s-Story");
-        var battleQuery = db.Query(@"SELECT * FROM Battle");
+        var battleQuery = db.Query(@"SELECT * FROM Battle WHERE Battle_Id=@0", Request["battle_id"]);
         var monsterQuery = db.Query(@"SELECT * FROM Monster WHERE Monster_Id=@0", Request["monster_id"]);
         var characterQuery = db.Query(@"SELECT * FROM Character WHERE Character_Id=@0", Request["character_id"]);
   
