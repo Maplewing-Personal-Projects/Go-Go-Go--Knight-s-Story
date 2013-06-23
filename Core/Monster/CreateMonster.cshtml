@@ -10,20 +10,18 @@
       }
       else{
         <form action="InsertMonster.cshtml" method="post">
-            <p>怪物名稱:
-                <input type="text" name="Monster_Name" size="15" maxlength="100">
-            </p>
+            <table>
+            <tr><td>怪物名稱:<input type="text" name="Monster_Name" size="15" maxlength="100"></td></tr>
+            <tr><td>怪物等級:<input type="text" name="Monster_Level" size="15" maxlength="100"></td></tr>
 
-            <p>怪物等級:
-                <input type="text" name="Monster_Level" size="15" maxlength="100">
-            </p>
-
-            <p>請選擇出沒的地圖</p>
+            <tr><td>請選擇出沒的地圖</td></tr>
+            
             @foreach (var result in resultQuery){
-                <input type="checkbox" name="Map" value="@result.Map_Name">
+                <tr><td><input type="checkbox" name="Map" value="@result.Map_Id"> @result.Map_Name</td></tr>
             }
-        
-            <input type="submit" name="subscribe" value="送出">
+            
+            <tr><td><input type="submit" name="subscribe" value="送出"></td></tr>
+            </table>
         </form>
       }
 }

@@ -16,7 +16,7 @@
         resultQuery = db.Query(@"SELECT * FROM Ability Where Ability_Id=@0", db.GetLastInsertId());
       
         db.Execute(@"INSERT INTO Character(Member_Id, Class_Id, Character_Name, Character_Level, Ability_Id, Current_HP, Current_MP)
-                     VALUES (@0, @1, @2, 1, @3, @4, @5)", Session["Id"], Class_Id, Character_Name, resultQuery[0].Ability_Id, Current_HP, Current_MP);
+                     VALUES(@0, @1, @2, 1, @3, @4, @5)", Session["Id"], Class_Id, Character_Name, resultQuery[0].Ability_Id, Current_HP, Current_MP);
     }
     Response.Redirect("DisplayCharacter.cshtml");
 }

@@ -6,22 +6,23 @@
 
 @{
   if(Session["Id"] == null){
-    Response.Redirect("../Member/Login.cshtml");
+      Response.Redirect("../Member/Login.cshtml");
   }
   else{
     <form action="CharacterInsert.cshtml" method="post">
-        <p>角色姓名:
-            <input type="text" name="Character_Name" size="15" maxlength="100">
-        </p>
+        <table>
+            <tr><td>角色姓名: <input type="text" name="Character_Name" size="15" maxlength="100"></td></tr>
 
-        <p>請選擇職業</p>
-        <select name="Class_Id">
-            @foreach( var classtype in resultQuery ){
-                <option value="@classtype.Class_Id">@classtype.Class_Name</option>
-            }
-        </select>
-        
-        <input type="submit" name="subscribe" value="送出">
+            <tr><td>請選擇職業</td></tr>
+            <tr><td>
+                <select name="Class_Id">
+                @foreach( var classtype in resultQuery ){
+                    <option value="@classtype.Class_Id">@classtype.Class_Name</option>
+                }
+                </select>
+            </td></tr>
+            <tr><td><input type="submit" name="subscribe" value="送出"></td></tr>
+        </table>
     </form>
   }
 }

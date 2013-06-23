@@ -1,3 +1,19 @@
 ﻿@{
-    
+    if(IsPost){
+        var Monster_Name = Request["Monster_Name"];
+        var Monster_Level = Request["Monster_Level"];
+        var Map_Id_Array = Request["Map"].Split(',');
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+
+        db.Execute(@"INSERT INTO MONSTER(Monster_Name, Monster_Level)
+                   VALUES(@0, @1)", Monster_Name, Monster_Level);
+        
+        var Monster = db.Query(@"SELECT * FROM Monster WHERE Monster_Id=@0", db.GetLastInsertId());
+
+        foreach (var Map_Id in Map_Id_Array){
+            db.Execute(@"INSERT INTO Have_Monster(Map_Id, Monster_Id)
+                       VALUES(@0, @1)", Map_Id, Monster[0].Monster_Id);
+        }
+    }
+    Response.Redirect("DisplayMonster.cshtml");
 }

@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+}
+
+@{
+    if(Session["Id"] == null){
+        Response.Redirect("../Member/Login.cshtml");
+    }
+    else{
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+        var resultQuery = db.Query(@"SELECT * FROM Monster");
+
+        <table>
+            <tr>
+                <th>名稱</th>
+                <th>等級</th>
+            </tr>
+
+            @foreach(var result in resultQuery){
+                <tr>
+                    <td>@result.Monster_Name</td>
+                    <td>@result.Monster_Level</td>
+                </tr>
+            }
+        </table>
+    }
+}
