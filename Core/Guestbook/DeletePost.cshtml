@@ -1,0 +1,15 @@
+﻿@{
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }  
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    var allReply = db.Query("SELECT Reply_Post_Id FROM Reply WHERE Main_Post_Id = @0", Request["p"]);
+    db.Execute("DELETE FROM Reply WHERE Main_Post_Id = @0", Request["p"]); 
+    db.Execute("DELETE FROM Post WHERE Post_Id = @0", Request["p"]);
+
+    foreach( var reply in allReply ){
+        db.Execute("DELETE FROM Post WHERE Post_Id = @0", reply.Reply_Post_Id);
+    }    
+    Response.Redirect("ViewAllPost.cshtml");
+}

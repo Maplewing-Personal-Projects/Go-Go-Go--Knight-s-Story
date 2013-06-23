@@ -7,21 +7,47 @@
         Response.Redirect("~/Core/Member/Login.cshtml");
     }    
 
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+   
+
+    var Title = "";
+    var Content = "";
+    var ReplyNum = "";
+    var EditNum = "";
+
     <form action="UpdatePost.cshtml" method="post">
-        <h1>發表新文章</h1>
+        @if( Request["EditNum"] != null ){
+            <h1>編輯文章</h1>
+            var result = db.Query("SELECT * FROM Post WHERE Post_Id = @0", Request["EditNum"]);
+            Title = result.ToArray()[0].Title;
+            Content = result.ToArray()[0].Content;
+            EditNum = Request["EditNum"];
+        }
+        else if( Request["Reply"] != null ){
+            <h1>發表新回覆</h1>
+               var result = db.Query("SELECT * FROM Post WHERE Post_Id = @0", Request["Reply"]);
+               Title = "RE:" + result.ToArray()[0].Title;
+               ReplyNum = Request["Reply"];
+        }else{
+            <h1>發表新文章</h1>
+        }
         <table>
             <tr>
                 <th>文章標題</th>
-                <td><input type="text" name="Title"/></td>
+                <td><input type="text" name="Title" value="@Title"/></td>
             </tr>
             <tr>
                 <th colspan="2" style="text-align: center">文章內容</th>
             </tr>
             <tr>
-                <td colspan="2"><textarea name="Content" style="width:800px; height: 600px;"></textarea></td>
+                <td colspan="2"><textarea name="Content" style="width:800px; height: 600px;">@Content</textarea></td>
             </tr>
             <tr>
-                <td colspan="2"><input type="submit" value="送出"></td>
+                <td colspan="2">
+                    <input type="hidden" name="EditNum" value="@EditNum"/>
+                    <input type="hidden" name="Reply" value="@ReplyNum"/>
+                    <input type="submit" value="送出">
+                </td>
             </tr>
         </table>
     </form>
