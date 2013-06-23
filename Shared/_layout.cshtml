@@ -1,11 +1,35 @@
-﻿<!DOCTYPE html>
+﻿@{
+}
+
+<!DOCTYPE html>
 
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <title>Go Go Go! Knight's Story</title>
+        <link rel="stylesheet" type="text/css" href="@Href("~/Styles/main.css")" />
     </head>
     <body>
-    @RenderBody()
+        <div class = "gameMain">
+            <header>
+                <img src = "@Href("~/Images/logo.png")" style = "width:  100%"/>
+                <ul>
+                    <li><a href = "@Href("~/index.cshtml")">首頁</a></li>
+                    @{
+                        if(Session["Id"] == null){
+                        }
+                        else{
+                            
+                        }
+                    }
+                </ul>
+            </header>
+            <section>
+            @RenderBody()
+            </section>
+
+            <footer>
+            </footer>
+        </div>
     </body>
 </html>
