@@ -18,11 +18,18 @@
     <table>
         <tr>
             <th>商店名稱</th>
+            <th></th>
         </tr>
         @foreach (var i in result){
+            
+
             <tr>
                 <td>@i.Shop_Name</td>
+
+                
                 <td>
+
+
                     
                     <form action ="LookItem.cshtml" method="POST">
                         <input type="hidden" name="id" value="@i.Shop_Id"/>

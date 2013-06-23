@@ -13,22 +13,37 @@
     <table>
         <tr>
             <th>商品名稱</th>
-            <th>商品價錢</th>
-            <th>商品類別</th>
+            <th>商品價錢</th>        
+            <th>生命點數</th>
+            <th>魔力點數</th>
+            <th>攻擊力</th>
+            <th>防禦力</th>
+            <th>敏捷力</th>
+            <th>命中率</th>
             <th>操作</th>
         </tr>
     @foreach (var i in result){
+        var ability_id=db.Query("SELECT * "+
+                                "FROM Ability " +   
+                                "WHERE Ability_Id=@0", @i.Ability_Id);
+
+
         <tr>
             <td>@i.Item_Name</td>
             <td>@i.Price</td>
-            <td>@i.Item_Type</td>
-            <td>
+
+            <td>@ability_id[0].Health_Point</td>
+            <td>@ability_id[0].Magic_Point</td>
+            <td>@ability_id[0].Attack</td>
+            <td>@ability_id[0].Defense</td>
+            <td>@ability_id[0].Agility</td>
+            <td>@ability_id[0].Dexterity</td>
+
+            <td colspan="2">
                 <form action ="ItemForm.cshtml" method="POST">
                     <input type="hidden" name="id" value="@i.Item_Id"/>
                     <input type="submit" name="edit" value="編輯">
                 </form>
-            </td>
-            <td>
                 <form action ="DeleteItem.cshtml" method="POST">
                     <input type="hidden" name="id" value="@i.Item_Id"/>
                     <input type="submit" name="delete" value="刪除">

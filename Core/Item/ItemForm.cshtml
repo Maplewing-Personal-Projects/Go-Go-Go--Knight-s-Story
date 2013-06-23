@@ -12,7 +12,12 @@
       var id = "";
       var Item_Name = "";
       var Price = "";
-
+      var Health_Point = "";
+      var Magic_Point = "";
+      var Attack="";
+      var Defense="";
+      var Agility="";
+      var Dexterity="";
     }
     @if(Request["id"] != null){
         <h1>物品的編輯</h1>
@@ -20,9 +25,19 @@
 
         var result = db.Query("SELECT * "+
                           "FROM Item WHERE Item_Id = @0", Request["id"]);
+        var result_ability = db.Query("SELECT * FROM Ability WHERE Ability_Id = @0", result.ToArray()[0].Ability_Id);
+
         Item_Name = result.ToArray()[0].Item_Name;
         Price = result.ToArray()[0].Price.ToString();
         id = Request["id"];
+
+        Health_Point = result_ability[0].Health_Point.ToString();
+        Magic_Point = result_ability[0].Magic_Point.ToString();
+        Attack = result_ability[0].Attack.ToString();
+        Defense = result_ability[0].Defense.ToString();
+        Agility = result_ability[0].Agility.ToString();
+        Dexterity = result_ability[0].Dexterity.ToString();
+
     }
     else{
         <h1>物品的新增</h1>
@@ -36,21 +51,37 @@
             <th>價錢</th>
             <td><input type="text" name="Price" size="15" maxlength="100" value="@Price"></td>
         </tr>
+            
         <tr>
-            <th>物品類型</th>
-            <td>
-                <select name="Item_type">
-                    <option value="LeftHand">左手武器</option>
-                    <option value="RightHand">右手武器</option>
-                    <option value="TwoHand">雙手武器</option>
-                    <option value="Hand">手部裝備</option>
-                    <option value="Head">頭部裝備</option>
-                    <option value="UpperBody">上身裝備</option>
-                    <option value="LowerBody">下身裝備</option>
-                    <option value="Foot">腳部裝備</option>
-                </select>
-            </td>
+            <th>生命點數</th>
+            <td><input type="text" name="Health_Point" size="15" maxlength="100" value="@Health_Point"></td>
         </tr>
+            
+        <tr>
+            <th>魔力點數</th>
+            <td><input type="text" name="Magic_Point" size="15" maxlength="100" value="@Magic_Point"></td>            
+        </tr>
+
+        <tr>
+            <th>攻擊力</th>
+            <td><input type="text" name="Attack" size="15" maxlength="100" value="@Attack"></td>
+        </tr>
+
+        <tr>
+            <th>防禦力</th>
+            <td><input type="text" name="Defense" size="15" maxlength="100" value="@Defense"></td>
+        </tr>
+            
+        <tr>
+            <th>敏捷力</th>
+            <td><input type="text" name="Agility" size="15" maxlength="100" value="@Agility"></td>
+        </tr>
+
+        <tr>
+            <th>命中率</th>
+            <td><input type="text" name="Dexterity" size="15" maxlength="100" value="@Dexterity"></td>
+        </tr>
+
         <tr>
             <input type="hidden" name="id" value="@id"/>
             @if(Request["id"] != null){

@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    var resultMapQuery = db.Query("SELECT * FROM Map");
+    var resultCharacterQuery = db.Query("SELECT * FROM Character");
+}
+
+@{
+    if(Session["Id"] == null){
+        Response.Redirect("../Member/Login.cshtml");
+    }
+    else{
+        <form action="ProcessBattle.cshtml" method="Post">
+            <table>
+                <tr><td>請選擇一張地圖</td></tr>
+                <tr><td>
+                    <select name="Map_Type">
+                        @foreach(var result in resultMapQuery){
+                            <option value="@result.Map_Id">@result.Map_Name</option>
+                        }
+                    </select>
+                </td></tr>
+                <tr><td>請選擇一隻角色</td></tr>
+                <tr><td>
+                    <select name="Character_Type">
+                        @foreach(var result in resultCharacterQuery){
+                            <option value="@result.Character_Id">@result.Character_Name</option>
+                        }
+                    </select>
+                </td></tr>
+                <tr><td><input type="submit" name="subscribe" value="送出"></td></tr>
+            </table>
+        </form>
+    }
+}
