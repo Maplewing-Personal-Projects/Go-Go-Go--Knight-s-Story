@@ -1,0 +1,7 @@
+﻿@{
+    if(IsPost){
+        var db = Database.Open("Go-Go-Go--Knight-s-Story");
+        db.Execute("INSERT INTO Post(Member_Id, Title, Content, Created_Time) VALUES(@0, @1, @2, @3)", Session["id"], Request["Title"], Request["Content"].Replace("\n","<br/>"), System.DateTime.Now);
+    }
+    Response.Redirect("ViewAllPost.cshtml");
+}

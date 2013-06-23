@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    var result = db.Query("SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id]");
+
+}
+
+<h1>文章列表</h1>
+<p><a href="PostForm.cshtml">發表文章</a></p>
+<table>
+    <tr>
+        <th style="width: 500px;">文章標題</th>
+        <th style="width: 100px;">發表人</th>
+        <th style="width: 100px;">發表時間</th>
+    </tr>
+    @foreach( var post in result ){
+        <tr>
+            <td><a href="ViewPost.cshtml?p=@post.Post_Id">@post.Title</a></td>
+            <td>@post.Nickname</td>
+            <td>@post.Created_Time</td>
+        </tr>
+    }
+</table>

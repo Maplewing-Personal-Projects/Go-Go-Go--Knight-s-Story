@@ -55,13 +55,23 @@ body {
     background: url("../Images/gameBg.png");
 }
 
-form table{
+table{
     margin: 0 auto;
+    border: 1px solid #000;
+}
+
+table th{
+    border: 1px solid #000;
+}
+
+table td{
+    border: 1px solid #000;
 }
 
 form table th{
     text-align: right;
 }
+
 
 footer{
     font-size: small;

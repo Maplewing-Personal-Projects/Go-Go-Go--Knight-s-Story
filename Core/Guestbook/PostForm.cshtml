@@ -7,12 +7,21 @@
         Response.Redirect("~/Core/Member/Login.cshtml");
     }    
 
-    <form action="UpdateForm.cshtml" method="post">
+    <form action="UpdatePost.cshtml" method="post">
         <h1>發表新文章</h1>
         <table>
             <tr>
                 <th>文章標題</th>
-                <td><input type="text" name="title"/></td>
+                <td><input type="text" name="Title"/></td>
+            </tr>
+            <tr>
+                <th colspan="2" style="text-align: center">文章內容</th>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea name="Content" style="width:800px; height: 600px;"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="送出"></td>
             </tr>
         </table>
     </form>

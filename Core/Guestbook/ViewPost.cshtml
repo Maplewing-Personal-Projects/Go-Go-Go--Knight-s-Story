@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Shared/_layout.cshtml";
+    if(Session["Id"] == null){
+        Response.Redirect("~/Core/Member/Login.cshtml");
+    }
+    
+    if(Request["p"] == null){
+        Response.Redirect("ViewAllPost.cshtml");
+    }    
+
+    var db = Database.Open("Go-Go-Go--Knight-s-Story");
+    var result = db.Query("SELECT * FROM Post p JOIN Member m ON p.[Member_Id] = m.[Member_Id] WHERE Post_Id = @0", Request["p"]);
+
+}
+
+<table>
+    <tr>
+        <th style="width: 100px">發表人</th>
+        <td style="width: 500px">@result.ToArray()[0].Nickname</td>
+    </tr>
+    <tr>
+        <th>發表標題</th>
+        <td>@result.ToArray()[0].Title</td>
+    </tr>
+    <tr>
+        <th colspan="2">發表文章</td>
+    </tr>
+    <tr>
+        @{ HtmlString hstr = new HtmlString(result.ToArray()[0].Content); }
+        <td colspan="2" style="height: 300px; text-align: left;">@hstr</td>
+    </tr>
+</table>
