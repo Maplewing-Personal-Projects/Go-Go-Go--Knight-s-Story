@@ -9,15 +9,14 @@
     else{
         var db = Database.Open("Go-Go-Go--Knight-s-Story");    
         var resultQuery = db.Query(@"SELECT * FROM Character c JOIN Ability a ON c.[Ability_Id] = a.[Ability_Id] WHERE Member_Id=@0 ORDER BY Character_Id", Session["id"]);
-        var memberName = db.Query(@"SELECT NickName FROM Member WHERE Member_Id = @0", Session["Id"]);
+        var memberName = db.Query(@"SELECT * FROM Member WHERE Member_Id = @0", Session["Id"]);
         <h1>@memberName.ToArray()[0].NickName 持有角色狀態</h1>
         <p><a href="CreateCharacter.cshtml">創建角色</a></p>
+        <p>目前持有金錢：@memberName.ToArray()[0].Money</p>
         <table>
             <tr>
                 <th>編號</th>
                 <th>名稱</th>
-                <th>等級</th>
-                <th>經驗</th>
                 <th>血量</th>
                 <th>魔力</th>
                 <th>攻擊</th>
@@ -30,8 +29,6 @@
                 <tr>
                     <td>@result.Character_Id</td>
                     <td>@result.Character_Name</td>
-                    <td>@result.Character_Level</td>
-                    <td>@result.Exp</td>
                     <td>@result.Current_HP</td>
                     <td>@result.Current_MP</td>
                     <td>@result.Attack</td>

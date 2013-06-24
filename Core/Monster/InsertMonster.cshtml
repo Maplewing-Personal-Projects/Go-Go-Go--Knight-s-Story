@@ -5,8 +5,12 @@
         var Map_Id_Array = Request["Map"].Split(',');
         var db = Database.Open("Go-Go-Go--Knight-s-Story");
 
-        db.Execute(@"INSERT INTO MONSTER(Monster_Name, Monster_Level)
-                   VALUES(@0, @1)", Monster_Name, Monster_Level);
+        db.Execute("INSERT INTO Ability(Health_Point, Magic_Point, Attack, Defense, Agility, Dexterity) "+
+                       "VALUES (@0, @1, @2, @3, @4, @5) ", Request["Monster_HP"], Request["Monster_MP"],
+                        Request["Monster_Atk"], Request["Monster_Def"], Request["Monster_Agi"], Request["Monster_Dex"]);
+
+        db.Execute(@"INSERT INTO MONSTER(Monster_Name, Monster_Level, Monster_Ability_Id, Money)
+                   VALUES(@0, @1, @2, @3)", Monster_Name, Monster_Level, db.GetLastInsertId(), Request["Monster_Money"]);
         
         var Monster = db.Query(@"SELECT * FROM Monster WHERE Monster_Id=@0", db.GetLastInsertId());
 
