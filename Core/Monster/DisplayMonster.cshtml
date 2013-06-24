@@ -9,17 +9,26 @@
     else{
         var db = Database.Open("Go-Go-Go--Knight-s-Story");
         var resultQuery = db.Query(@"SELECT * FROM Monster");
-
+        <h1>怪物一覽表</h1>
         <table>
             <tr>
                 <th>名稱</th>
                 <th>等級</th>
+                <th>怪物出沒地</th>
             </tr>
 
             @foreach(var result in resultQuery){
+                var placeQuery = db.Query("SELECT * FROM Have_Monster WHERE Monster_Id = @0", result.Monster_Id );
+                string place = "";
+                foreach(var p in placeQuery){
+                    var placeName = db.Query("SELECT Map_Name FROM Map WHERE Map_Id = @0", p.Map_Id );
+                    if(place != ""){ place += ","; }
+                    place += placeName[0].Map_Name;
+                }
                 <tr>
                     <td>@result.Monster_Name</td>
                     <td>@result.Monster_Level</td>
+                    <td>@place</td>
                 </tr>
             }
         </table>

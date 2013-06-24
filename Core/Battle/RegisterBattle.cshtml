@@ -2,7 +2,7 @@
     Layout = "~/Shared/_layout.cshtml";
     var db = Database.Open("Go-Go-Go--Knight-s-Story");
     var resultMapQuery = db.Query("SELECT * FROM Map");
-    var resultCharacterQuery = db.Query("SELECT * FROM Character");
+    var resultCharacterQuery = db.Query("SELECT * FROM Character WHERE Member_Id = @0", Session["id"]);
 }
 
 @{
@@ -12,6 +12,12 @@
     else{
         <form action="ProcessBattle.cshtml" method="Post">
             <h1>探險</h1>
+            @if((int)Session["id"] == 1){
+                <p><a href="../Monster/CreateMonster.cshtml">新增怪物</a></p>
+            }
+            <p>
+                <a href="../Monster/DisplayMonster.cshtml">怪物一覽表</a> | <a href="../Map/DisplayMap.cshtml">地圖一覽表</a>
+            </p>
             <table>
                 <tr><td>請選擇一張地圖</td></tr>
                 <tr><td>

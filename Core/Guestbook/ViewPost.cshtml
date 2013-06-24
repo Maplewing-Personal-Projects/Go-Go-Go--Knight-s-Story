@@ -35,6 +35,13 @@
             </td>
         </tr>
     }
+    else if( (int)Session["id"] == 1 ){
+        <tr>
+            <td colspan="2">
+                <a href="DeletePost.cshtml?p=@result.ToArray()[0].Post_Id">刪除文章</a>
+            </td>
+        </tr>
+    }
 </table>
 <h2>回覆</h2>
 
@@ -59,6 +66,13 @@
         <tr>
             <td colspan="2">
                 <a href="PostForm.cshtml?EditNum=@reply.Post_Id">編輯文章</a> |
+                <a href="DeletePost.cshtml?p=@reply.Post_Id">刪除文章</a>
+            </td>
+        </tr>
+        }
+        else if( (int)Session["id"] == 1 ){
+        <tr>
+            <td colspan="2">
                 <a href="DeletePost.cshtml?p=@reply.Post_Id">刪除文章</a>
             </td>
         </tr>
